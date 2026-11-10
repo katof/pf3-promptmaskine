@@ -1,0 +1,755 @@
+<!doctype html><html lang="da"><head><meta charset="utf-8"><title>PF3 Promptmaskine</title><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{--page:#f6f8fc;color-scheme:light}
+body{margin:0;background:var(--page);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--page)}
+#pf3-stemme{--snar-top:env(safe-area-inset-top,0px)}
+#pf3-stemme{--blue:#2563eb;--ink:#1e3a8a;--red:#c1272d;--tint:#eef3ff;--tint2:#e3f4f1;--text:#1b2433;--muted:#5d6a7c;--line:#e3e8f1;--bg:#f6f8fc;--card:#ffffff;--ok:#1f7a4d;--warn:#9a5a00;
+  --tBk:#2563eb;--tB:#2563eb;--tMo:#c2621a;--tM:#6d4fc2;--tG:#b3417a;--tD:#8a6d1a;--tU:#5b7a3a;--vOs:#0f9d8a;--vAI:#8a98a3;--vNo:#c1272d;--vUn:#e3e8f1;
+  --f:Inter,system-ui,Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  box-sizing:border-box;max-width:940px;margin:0 auto;padding:8px clamp(16px,2.6vw,40px) 56px;color:var(--text);font:15px/1.6 var(--f);text-align:left;background:transparent}
+#pf3-stemme *,#pf3-stemme *::before,#pf3-stemme *::after{box-sizing:border-box}
+#pf3-stemme [hidden]{display:none!important}
+#pf3-stemme .hidden{display:none!important}
+#pf3-stemme h1,#pf3-stemme h2,#pf3-stemme h3{margin:0;color:var(--ink);line-height:1.2}
+#pf3-stemme h1{font-size:clamp(28px,5vw,42px);font-weight:700;letter-spacing:-.02em;margin:.2em 0 .25em}
+#pf3-stemme h2{font-size:22px;font-weight:700}
+#pf3-stemme h3{font-size:15px;font-weight:600}
+#pf3-stemme p{margin:0}
+#pf3-stemme a{color:var(--blue)}
+#pf3-stemme .eyebrow{font:600 12px/1 var(--f);letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+#pf3-stemme .lede{color:var(--muted);font-size:16px;max-width:62ch}
+#pf3-stemme header{padding:28px 0 10px}
+#pf3-stemme .hint{font-size:13px;color:var(--muted);margin-top:4px}
+#pf3-stemme .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:18px 0 6px}
+#pf3-stemme .how div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13px;color:var(--muted)}
+#pf3-stemme .how b{display:flex;align-items:center;gap:8px;font:600 13px/1.3 var(--f);color:var(--ink);margin-bottom:3px}
+#pf3-stemme .how i{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font:600 12px/1 var(--mono);font-style:normal}
+#pf3-stemme .work{position:sticky;top:var(--snar-top,88px);z-index:6;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:14px 0 10px;padding:10px 14px;border-radius:14px;background:var(--ink);color:#fff;font-size:13px;box-shadow:0 10px 30px rgba(20,40,110,.18)}
+#pf3-stemme .work b{font-weight:600}
+#pf3-stemme .work .sep{opacity:.5}
+#pf3-stemme .work button{padding:5px 9px;font-size:12px;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:#fff;margin-left:auto}
+#pf3-stemme .work button:hover{background:rgba(255,255,255,.22);color:#fff}
+#pf3-stemme .steps{position:sticky;top:calc(var(--snar-top,88px) + 54px);z-index:5;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 0 22px;padding:6px;border:1px solid rgba(255,255,255,.7);border-radius:16px;background:rgba(255,255,255,.88);box-shadow:0 10px 30px rgba(20,40,110,.10);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+#pf3-stemme .steps a{flex:none;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:11px;font:600 12px/1 var(--f);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;white-space:nowrap}
+#pf3-stemme .steps a b{font-family:var(--mono);color:var(--blue);font-weight:500}
+#pf3-stemme .steps a:hover{background:var(--tint);color:var(--blue)}
+#pf3-stemme section{margin:0 0 34px;scroll-margin-top:calc(var(--snar-top,88px) + 120px)}
+#pf3-stemme .head{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
+#pf3-stemme .num{display:inline-grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;font:600 15px/1 var(--mono)}
+#pf3-stemme .head p{color:var(--muted);max-width:66ch;margin-top:4px;font-size:14px}
+#pf3-stemme .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:0 10px 30px rgba(20,40,110,.06)}
+#pf3-stemme .stack{display:grid;gap:16px}
+#pf3-stemme .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+#pf3-stemme .field{min-width:0}
+#pf3-stemme .lbl{display:block;font:600 13px/1.3 var(--f);color:var(--ink);margin:0 0 6px}
+#pf3-stemme input[type=text],#pf3-stemme textarea,#pf3-stemme select{width:100%;margin:0;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-height:0;height:auto;box-shadow:none}
+#pf3-stemme textarea{resize:vertical;min-height:72px;line-height:1.5}
+#pf3-stemme :is(input,textarea,select,button,summary):focus-visible{outline:2px solid var(--red);outline-offset:2px}
+#pf3-stemme .checks{display:grid;gap:8px}
+#pf3-stemme .checks label{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer;margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+#pf3-stemme .checks label.on{border-color:var(--blue);background:var(--tint)}
+#pf3-stemme .checks input{margin:4px 0 0;width:auto;accent-color:var(--blue);flex:none}
+#pf3-stemme .checks .ti{display:block;font-weight:600;color:var(--ink)}
+#pf3-stemme .checks .sub{display:block;font-size:12px;color:var(--muted)}
+#pf3-stemme .badge{display:inline-block;font:600 11px/1 var(--f);letter-spacing:.04em;padding:4px 7px;border-radius:999px;background:var(--tint2);color:#0b5c52;margin-left:6px;vertical-align:1px}
+#pf3-stemme .badge.own{background:#fff1e0;color:#8a4a00}
+#pf3-stemme button{appearance:none;font:600 13px/1 var(--f);border-radius:11px;padding:11px 16px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);margin:0;box-shadow:none;text-transform:none;letter-spacing:0;transition:background .15s,color .15s}
+#pf3-stemme button:hover{background:var(--tint);color:var(--blue)}
+#pf3-stemme button.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+#pf3-stemme button.primary:hover{background:var(--ink);color:#fff}
+#pf3-stemme button.small{padding:6px 10px;font-size:12px}
+#pf3-stemme button.danger{color:var(--red)}
+#pf3-stemme button[disabled]{opacity:.5;cursor:not-allowed}
+#pf3-stemme .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+#pf3-stemme .who{display:flex;flex-wrap:wrap;gap:6px}
+#pf3-stemme .who label{cursor:pointer;margin:0;position:relative}
+#pf3-stemme .who input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+#pf3-stemme .who span{display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;border:1px solid var(--line);font:500 13px/1 var(--f);color:var(--ink);background:var(--card)}
+#pf3-stemme .who input:checked+span{border-color:var(--blue);background:var(--tint);color:var(--blue)}
+#pf3-stemme .who input:focus-visible+span{outline:2px solid var(--red);outline-offset:2px}
+#pf3-stemme .box{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font:13px/1.65 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;margin:0;color:var(--text)}
+#pf3-stemme .status{font-size:13px;color:var(--muted)}
+#pf3-stemme .status.bad{color:var(--red)}
+#pf3-stemme .status.good{color:var(--ok)}
+#pf3-stemme details.ver{border:1px solid var(--line);border-radius:14px;background:var(--card);margin-bottom:10px}
+#pf3-stemme details.ver.cur{border-color:var(--blue);box-shadow:0 0 0 3px var(--tint)}
+#pf3-stemme details.ver summary{cursor:pointer;padding:12px 16px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;list-style:none}
+#pf3-stemme details.ver summary::-webkit-details-marker{display:none}
+#pf3-stemme details.ver summary b{font:600 13px/1 var(--mono);color:var(--blue)}
+#pf3-stemme details.ver summary em{font-style:normal;color:var(--muted);font-size:13px}
+#pf3-stemme details.ver .body{padding:0 16px 16px;display:grid;gap:12px}
+#pf3-stemme details>summary.hint{cursor:pointer;list-style:none}
+#pf3-stemme .tag{font:600 11px/1 var(--mono);padding:4px 7px;border-radius:6px;background:var(--tint);color:var(--muted)}
+#pf3-stemme .tag.has{color:var(--ok);background:var(--tint2)}
+#pf3-stemme .tag.cur{color:#fff;background:var(--blue)}
+#pf3-stemme .notice{background:var(--tint);border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:16px;color:var(--ink)}
+#pf3-stemme .empty{font-size:13px;color:var(--muted);padding:6px 0}
+#pf3-stemme .bar{display:flex;height:22px;border-radius:8px;overflow:hidden;background:var(--vUn);margin:6px 0 10px}
+#pf3-stemme .bar i{display:block;flex:1;min-width:1px}
+#pf3-stemme .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px}
+#pf3-stemme .legend span{display:inline-flex;align-items:center;gap:6px}
+#pf3-stemme .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+#pf3-stemme .tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+#pf3-stemme .tally div{background:var(--bg);border-radius:12px;padding:10px 12px}
+#pf3-stemme .tally b{display:block;font:700 22px/1.1 var(--f);color:var(--ink)}
+#pf3-stemme .tally span{font-size:12px;color:var(--muted)}
+#pf3-stemme .sent{border-top:1px solid var(--line);padding:12px 0;display:grid;gap:8px}
+#pf3-stemme .sent:first-child{border-top:0}
+#pf3-stemme .sent .txt{font-size:15px;border-left:4px solid var(--vUn);padding-left:12px;overflow-wrap:anywhere}
+#pf3-stemme .sent .txt.h{border-left-color:transparent;font-weight:600;color:var(--muted);font-size:14px}
+#pf3-stemme .sent .txt .n{font:500 11px/1 var(--mono);color:var(--muted);margin-right:6px}
+#pf3-stemme .tags{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+#pf3-stemme .tags button{padding:6px 10px;font-size:12px;border-radius:999px}
+#pf3-stemme .tags button.on{color:#fff;border-color:transparent}
+#pf3-stemme .tags .sep{width:1px;height:18px;background:var(--line);margin:0 4px}
+#pf3-stemme .cite{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:13px;display:grid;gap:6px}
+#pf3-stemme .cite .ref{font:600 12px/1 var(--mono);color:var(--blue)}
+#pf3-stemme .cite .q{color:var(--muted);max-height:120px;overflow:auto;overflow-wrap:anywhere;cursor:pointer}
+#pf3-stemme .cite .q.open{max-height:none}
+#pf3-stemme .cite .cb{display:flex;flex-wrap:wrap;gap:5px}
+#pf3-stemme .cite .cb button{padding:5px 9px;font-size:12px}
+#pf3-stemme .cite .cb button.on{border-color:var(--ink);background:var(--tint)}
+#pf3-stemme .cmp{display:grid;gap:8px}
+#pf3-stemme .cmp .r{display:grid;grid-template-columns:90px 1fr 56px;gap:10px;align-items:center;font-size:13px}
+#pf3-stemme .cmp .r .bar{margin:0;height:14px}
+#pf3-stemme .cmp .r em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+#pf3-stemme .foot{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+#pf3-stemme .foot .row{gap:6px}
+#pf3-stemme input[type=file]{display:none}
+#pf3-stemme .gate{background:var(--card);border:2px solid var(--blue);border-radius:16px;padding:20px 22px;margin:14px 0 24px;box-shadow:0 10px 30px rgba(20,40,110,.10)}
+#pf3-stemme .gate h2{margin-bottom:6px}
+#pf3-stemme .gate .hint{margin-bottom:12px}
+#pf3-stemme .gate .row{margin-top:10px}
+#pf3-stemme .locked{opacity:.45;pointer-events:none;filter:grayscale(.4)}
+@media (max-width:750px){#pf3-stemme{padding-inline:16px}#pf3-stemme .work{top:var(--snar-top,72px)}#pf3-stemme .steps{top:calc(var(--snar-top,72px) + 54px)}#pf3-stemme section{scroll-margin-top:calc(var(--snar-top,72px) + 120px)}}
+@media (prefers-reduced-motion:reduce){#pf3-stemme *{transition:none!important}}
+
+
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--page:#0f1520;color-scheme:dark}
+ :root:not([data-theme="light"]) #pf3-stemme{--bg:#0f1520;--card:#18212f;--text:#e6ebf3;--muted:#a3afc0;--line:#2b3649;--tint:#1c2b4d;--tint2:#153330;--ink:#c9d8ff;--vUn:#2b3649;--blue:#6b9cff}
+ :root:not([data-theme="light"]) #pf3-stemme .work{background:#1e3a8a} :root:not([data-theme="light"]) #pf3-stemme .steps{background:rgba(24,33,47,.9);border-color:#2b3649}
+ :root:not([data-theme="light"]) #pf3-stemme .badge{color:#9fe3d6} :root:not([data-theme="light"]) #pf3-stemme .how i,:root:not([data-theme="light"]) #pf3-stemme .num,:root:not([data-theme="light"]) #pf3-stemme button.primary{color:#0b1220}}
+:root[data-theme="dark"]{--page:#0f1520;color-scheme:dark}
+:root[data-theme="dark"] #pf3-stemme{--bg:#0f1520;--card:#18212f;--text:#e6ebf3;--muted:#a3afc0;--line:#2b3649;--tint:#1c2b4d;--tint2:#153330;--ink:#c9d8ff;--vUn:#2b3649;--blue:#6b9cff}
+:root[data-theme="dark"] #pf3-stemme .work{background:#1e3a8a} :root[data-theme="dark"] #pf3-stemme .steps{background:rgba(24,33,47,.9);border-color:#2b3649}
+:root[data-theme="dark"] #pf3-stemme .badge{color:#9fe3d6} :root[data-theme="dark"] #pf3-stemme .how i,:root[data-theme="dark"] #pf3-stemme .num,:root[data-theme="dark"] #pf3-stemme button.primary{color:#0b1220}
+
+</style>
+<section id="pf3-stemme" aria-label="PF3 Promptmaskine">
+<header>
+  <div class="eyebrow">The Four Prompteers · GenAI 2026 · Portfolio 3</div>
+  <h1>PF3 Promptmaskine</h1>
+  <p class="lede">Skriv jeres holdning, kør prompten, og find ud af, hvem der taler i AI'ens svar: teorien, jer eller AI'en selv.</p>
+  <div class="how">
+    <div><b><i>1</i>Holdning</b>Vælg tekster og linse, og skriv, hvad I mener.</div>
+    <div><b><i>2</i>Prompt</b>Prompten bygger sig selv. Kopiér den og hent teksterne.</div>
+    <div><b><i>3</i>Svar</b>Sæt AI'ens svar ind, uredigeret.</div>
+    <div><b><i>4</i>Stemmeprøven</b>Tag hver sætning: hvem taler? Tjek henvisningerne.</div>
+    <div><b><i>5</i>Bilag</b>Alt samles til Docmost.</div>
+  </div>
+</header>
+
+<div class="gate" id="gate">
+  <h2>Giv forsøget et navn, før I går i gang</h2>
+  <p class="hint">Navnet står øverst, mens I arbejder, og bliver filnavnet på bilag og eksport. Fx <i>forsoeg-1-fremtiden</i>.</p>
+  <div class="row">
+    <input type="text" id="gateName" placeholder="forsoeg-1-fremtiden" style="max-width:360px">
+    <button type="button" class="primary" id="gateGo">Start forsøget</button>
+    <span class="status" id="gateStatus" role="status"></span>
+  </div>
+  <div id="gateList" class="row" style="margin-top:8px"></div>
+</div>
+
+<div class="work" id="work" hidden>
+  <span>Forsøg: <b id="wName">–</b></span><span class="sep">·</span>
+  <span>Seneste prompt: <b id="wPrompt">ingen</b></span><span class="sep">·</span>
+  <span>Svar: <b id="wSvar">0</b></span><span class="sep">·</span>
+  <span>Stemmeprøven: <b id="wAudit">–</b></span>
+  <button type="button" id="wNew">Nyt forsøg</button>
+</div>
+
+<nav class="steps" aria-label="Trin">
+  <a href="#pf3-ramme"><b>1</b>Holdning</a>
+  <a href="#pf3-prompt"><b>2</b>Prompt</a>
+  <a href="#pf3-svar"><b>3</b>Svar</a>
+  <a href="#pf3-audit"><b>4</b>Stemmeprøven</a>
+  <a href="#pf3-bilag"><b>5</b>Bilag</a>
+</nav>
+
+<div class="notice" id="notice" hidden></div>
+
+<div id="main">
+<section id="pf3-ramme">
+  <div class="head"><span class="num">1</span><div><h2>Holdning</h2><p>Teorien er de tekster, I vælger. Jeres stemme er det, I skriver i feltet. Begge dele går ind i prompten.</p></div></div>
+  <div class="card stack">
+    <div class="field">
+      <span class="lbl" id="tx-lbl">Tekster i prompten</span>
+      <div class="checks" id="tekster" role="group" aria-labelledby="tx-lbl"></div>
+      <p class="hint" id="noTexts">Der ligger ingen tekster i maskinen. Sæt jeres tekster ind eller upload dem herunder. De bliver kun i din egen browser.</p>
+      <details style="margin-top:10px" open>
+        <summary class="hint">Tilføj en tekst (indsæt eller upload .md/.txt)</summary>
+        <div class="stack" style="margin-top:10px">
+          <div class="grid2">
+            <div class="field"><label class="lbl" for="ntShort">Kort navn</label><input type="text" id="ntShort" placeholder="Fx: Bundsgaard"></div>
+            <div class="field"><label class="lbl" for="ntLabel">Kilde</label><input type="text" id="ntLabel" placeholder="Fx: Bundsgaard (2025): Kunstig intelligens i dansk, s. 41–46"></div>
+          </div>
+          <div class="field">
+            <label class="lbl" for="ntText">Teksten</label>
+            <textarea id="ntText" rows="5" placeholder="Sæt teksten ind her, eller hent en fil nedenfor. Afsnit nummereres automatisk, hvis de ikke allerede har numre som [B-1]."></textarea>
+          </div>
+          <div class="row">
+            <input type="file" id="ntFile" accept=".md,.txt,text/markdown,text/plain" hidden>
+            <button type="button" id="ntPick">Hent fra fil (.md eller .txt)</button>
+            <button type="button" class="primary" id="ntAdd">Tilføj teksten</button>
+            <span class="status" id="ntStatus" role="status"></span>
+          </div>
+        </div>
+      </details>
+    </div>
+    <div class="field"><span class="lbl" id="ud-lbl">Linse (fra opgaven)</span><div class="checks" id="udgangspunkt" role="group" aria-labelledby="ud-lbl"></div></div>
+    <div class="field">
+      <label class="lbl" for="pf3-tanker">Vores holdning</label>
+      <textarea id="pf3-tanker" rows="7" placeholder="Hvad mener vi? Hvor er vi enige med teksterne, og hvor står vi af? Skriv også, hvis vi er uenige indbyrdes. Det her er den stemme, Stemmeprøven leder efter bagefter."></textarea>
+      <p class="hint">Med jeres egne ord. Det er jeres stemme i prompten.</p>
+    </div>
+    <details>
+      <summary class="hint">Ekstra instruktion til AI'en</summary>
+      <textarea id="pf3-ekstra" style="margin-top:8px" placeholder="Fx: Brug begge forfattere lige meget."></textarea>
+    </details>
+    <p class="status" id="rammeStatus" role="status"></p>
+  </div>
+</section>
+
+<section id="pf3-prompt">
+  <div class="head"><span class="num">2</span><div><h2>Prompt</h2><p>Kopiér prompten til chatten, og hent teksterne som filer, I vedhæfter. Gem prompten som en version, hver gang I kører den.</p></div></div>
+  <div class="card stack">
+    <pre class="box" id="promptbox"></pre>
+    <div class="row"><button type="button" class="primary" id="copyPrompt">Kopiér prompten</button><span class="status" id="copyStatus" role="status"></span></div>
+    <div>
+      <span class="lbl">Teksterne som filer til at vedhæfte</span>
+      <div class="row" id="textFiles"></div>
+      <p class="hint">Træk filerne ind i chatten sammen med prompten. Virker download ikke, så brug "Kopiér" og sæt teksten ind som en besked for sig.</p>
+    </div>
+    <details>
+      <summary class="hint">Eller: læg hele teksterne nederst i selve prompten</summary>
+      <label style="display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer;margin:8px 0 0"><input type="checkbox" id="medTekster" style="width:auto;accent-color:var(--blue)"> Hele teksterne med i prompten</label>
+      <p class="hint" id="tegn"></p>
+    </details>
+    <div class="field"><label class="lbl" for="pf3-hvorfor">Note til denne version (valgfrit)</label><input type="text" id="pf3-hvorfor" placeholder="Fx: Første version · eller: Skærpede reglen om uenighed"></div>
+    <div class="row"><button type="button" id="saveVersion">Gem prompten som version</button><span class="status" id="verStatus" role="status"></span></div>
+  </div>
+</section>
+
+<section id="pf3-svar">
+  <div class="head"><span class="num">3</span><div><h2>Svar</h2><p>Sæt AI'ens svar ind her, uredigeret. Vælg, hvilken prompt det hører til. Har I ikke gemt prompten, gemmes den sammen med svaret.</p></div></div>
+  <div class="card stack" style="margin-bottom:14px">
+    <div class="grid2">
+      <div class="field"><label class="lbl" for="svarTil">Svar på</label><select id="svarTil"></select></div>
+      <div class="field"><label class="lbl" for="svarModel">Model og indstillinger</label><input type="text" id="svarModel" placeholder="Fx: Copilot (AU), Auto · ChatGPT 5 · Claude"></div>
+    </div>
+    <div class="field"><label class="lbl" for="svarTekst">AI'ens svar</label><textarea id="svarTekst" rows="10" placeholder="Sæt hele svaret ind her."></textarea></div>
+    <div class="row"><button type="button" class="primary" id="saveSvar">Gem svar</button><span class="status" id="svarStatus" role="status"></span></div>
+  </div>
+  <h3 style="margin:0 0 8px">Gemte versioner</h3>
+  <div id="verList"></div>
+</section>
+
+<section id="pf3-audit">
+  <div class="head"><span class="num">4</span><div><h2>Stemmeprøven</h2><p>Hvem taler i AI'ens tekst? Tag hver sætning som teori, jer, AI'en selv eller uden belæg. Hvor AI'en henviser, står afsnittet lige under, så I kan tjekke, om det passer.</p></div></div>
+  <div class="card stack">
+    <div class="row">
+      <span class="lbl" style="margin:0">Tekst</span><select id="auditPick" style="width:auto"></select>
+      <span class="lbl" style="margin:0 0 0 8px">Hvem tagger? (valgfrit)</span><div class="who" id="whoTag" style="display:inline-flex"></div>
+    </div>
+    <div id="auditEmpty" class="empty">Sæt et AI-svar ind i trin 3 først.</div>
+    <div id="auditBody" class="stack hidden">
+      <div><div class="bar" id="bigbar"></div><div class="legend" id="legend"></div></div>
+      <div class="tally" id="tally"></div>
+      <div id="sentences"></div>
+      <div id="cmpBox" class="hidden"><h3 style="margin-bottom:8px">Vores stemme fra version til version</h3><div class="cmp" id="cmp"></div></div>
+      <div class="row">
+        <button type="button" class="primary" id="copyAnnot">Kopiér kommenteret tekst til Docmost</button>
+        <button type="button" id="copyRefl">Kopiér refleksionsskelet</button>
+        <span class="status" id="annotStatus" role="status"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pf3-bilag">
+  <div class="head"><span class="num">5</span><div><h2>Bilag</h2><p>Metadata, jeres holdning, alle promptversioner og svar. Kopiér det ind i Docmost som bilag.</p></div></div>
+  <div class="card stack">
+    <pre class="box" id="bilagbox"></pre>
+    <div class="row"><button type="button" class="primary" id="copyBilag">Kopiér bilaget</button><button type="button" id="dlBilag">Hent som fil</button><span class="status" id="bilagStatus" role="status"></span></div>
+    <p class="hint" id="bilagHint"></p>
+  </div>
+</section>
+</div>
+
+<div class="foot">
+  <span id="footTxt">Ingen tekster ligger i maskinen. Alt, I skriver og indsætter, gemmes kun i denne browser.</span>
+  <span class="row">
+    <button type="button" class="small" id="exportBtn">Gem forsøget som fil</button>
+    <input type="file" id="importFile" accept=".json,application/json" hidden>
+    <button type="button" class="small" id="importBtn">Åbn forsøg fra fil</button>
+    <button type="button" class="small danger" id="wipe">Slet forsøget</button>
+    <span class="status" id="wipeStatus" role="status"></span>
+  </span>
+</div>
+
+</section>
+<script>
+(function(){
+'use strict';
+const root = document.getElementById('pf3-stemme');
+if (!root || root.dataset.ready === 'true') return;
+root.dataset.ready = 'true';
+const $ = id => root.querySelector('#' + id);
+const MODE = "local";
+const NAMES = ["Karina","Kawsar","David","Maria"];
+const UDG = [["laering","Udfordringer for vores egen læringsproces"],["uddannelse","Udfordringer for uddannelsesområdet, når elever og studerende har sprogmodeller"],["organisation","Udfordringer for organisationer"]];
+const RAW = {};
+const BUILTIN = [];
+const OWN_COLORS = ["#5b7a3a","#8a3f9a","#9a5a00","#2a7f8f","#7a3a5b"];
+
+// ---------- state ----------
+let S = blank();
+function blank(){ return {name:"", ramme:{udgangspunkt:[], tekster:[], tanker:"", ekstra:"", upd:0}, versioner:[], stemmer:{}, tekster:[]}; }
+let openVer = {}, drafts = {}, pickTag = null, auditVid = null, loaded = false;
+const esc = s => String(s == null ? "" : s);
+
+// ---------- helpers ----------
+function fmt(ts){ try { return new Date(ts).toLocaleString("da-DK",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}); } catch(e){ return ""; } }
+const nf = n => n.toLocaleString("da-DK");
+const pct = (a, n) => n ? Math.round(100*a/n) : 0;
+const uid = () => "v" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+function nextRound(){ return S.versioner.reduce((m,v) => Math.max(m, v.nr||0), 0) + 1; }
+function mkBtn(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.textContent = label; if (cls) b.className = cls; b.addEventListener("click", fn); return b; }
+function allTexts(){ return BUILTIN.concat(S.tekster || []); }
+function textById(id){ return allTexts().find(t => t.id === id); }
+function selectedTexts(){ return (S.ramme.tekster || []).map(textById).filter(Boolean); }
+function codeInfo(code){ const t = allTexts().find(x => x.code === code); if (!t) return null; const i = (S.tekster||[]).indexOf(t); return {label: t.short, color: t.builtin ? `var(--t${t.code})` : OWN_COLORS[(i < 0 ? 0 : i) % OWN_COLORS.length]}; }
+let PARA = {};
+function rebuildPara(){ PARA = {}; allTexts().forEach(t => String(t.text||"").split("\n").forEach(line => { const m = line.match(/^\[([A-Z][a-z]?)-(\d+)\]\s*(.*)$/); if (m) PARA[m[1]+"-"+m[2]] = m[3]; })); }
+function notice(msg){ const n = $("notice"); n.textContent = msg; n.hidden = !msg; }
+function copyText(text, statusId){
+  const st = $(statusId);
+  const done = () => { st.className = "status good"; st.textContent = "Kopieret"; };
+  const fail = () => {
+    let ta = $("copyFallback");
+    if (!ta){ ta = document.createElement("textarea"); ta.id = "copyFallback"; ta.rows = 6; ta.setAttribute("aria-label","Tekst til kopiering"); st.after(ta); }
+    ta.value = text; ta.focus(); ta.select(); st.className = "status"; st.textContent = "Teksten er markeret i feltet. Tryk Ctrl+C.";
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fail); else fail();
+}
+function whoPicker(el, name, onPick){
+  el.innerHTML = "";
+  NAMES.forEach(n => { const lab = document.createElement("label"), inp = document.createElement("input"), sp = document.createElement("span");
+    inp.type = "radio"; inp.name = "pf3-" + name; inp.value = n; inp.addEventListener("change", () => onPick(n)); sp.textContent = n; lab.append(inp, sp); el.append(lab); });
+}
+whoPicker($("whoTag"), "t", n => { pickTag = n; });
+function safeName(s){ return String(s||"").trim().toLowerCase().replace(/[æ]/g,"ae").replace(/[ø]/g,"oe").replace(/[å]/g,"aa").replace(/[^a-z0-9._-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,60); }
+
+// ---------- store ----------
+// DbStore: fælles lager i artefaktet (db-capability). Ét forsøg ad gangen, delt af alle fire.
+let tagSubs = {};
+const LS_KEY = "pf3-promptmaskine";
+function lsRead(){ try { return JSON.parse(localStorage.getItem(LS_KEY) || "{}") || {}; } catch(e){ return {}; } }
+function lsWrite(all){ try { localStorage.setItem(LS_KEY, JSON.stringify(all)); return true; } catch(e){ return false; } }
+function downloadFile(name, data, statusId){
+  const st = $(statusId);
+  try {
+    const url = URL.createObjectURL(new Blob([data], {type: "text/plain;charset=utf-8"}));
+    const a = document.createElement("a"); a.href = url; a.download = name; document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    if (st){ st.className = "status good"; st.textContent = name + " er hentet."; }
+  } catch(e){ if (st){ st.className = "status bad"; st.textContent = "Download virker ikke her. Brug Kopiér i stedet."; } }
+}
+const store = {
+  persist(){
+    if (!S.name) return;
+    const all = lsRead(); all.forsoeg = all.forsoeg || {}; all.forsoeg[S.name] = S; all.aktiv = S.name;
+    if (!lsWrite(all)) notice("Browseren gemmer ikke. Brug “Gem forsøget som fil”, før du lukker siden.");
+  },
+  init(cb){
+    const all = lsRead();
+    if (all.aktiv && all.forsoeg && all.forsoeg[all.aktiv]){ S = Object.assign(blank(), all.forsoeg[all.aktiv]); }
+    loaded = true; cb();
+  },
+  listNames(){ const all = lsRead(); return Object.keys(all.forsoeg || {}); },
+  openName(n){ const all = lsRead(); if (all.forsoeg && all.forsoeg[n]){ store.persist(); S = Object.assign(blank(), all.forsoeg[n]); all.aktiv = n; lsWrite(all); openVer = {}; drafts = {}; auditVid = null; renderAll(); } },
+  watchTags(){},
+  async setName(n){ S.name = n; S.ramme.upd = Date.now(); store.persist(); renderAll(); },
+  async newForsoeg(){ store.persist(); const all = lsRead(); delete all.aktiv; lsWrite(all); S = blank(); },
+  async setRamme(r){ S.ramme = r; store.persist(); },
+  async addVersion(row){ S.versioner.push(row); store.persist(); },
+  async updateVersion(id, patch){ const v = S.versioner.find(x => x.id === id); if (v) Object.assign(v, patch); store.persist(); },
+  async deleteVersion(id){ S.versioner = S.versioner.filter(v => v.id !== id); delete S.stemmer[id]; store.persist(); },
+  async setTag(vid, idx, tag){ store.persist(); },
+  async addText(t){ S.tekster.push(t); store.persist(); },
+  async deleteText(id){ S.ramme.tekster = (S.ramme.tekster||[]).filter(x => x !== id); S.tekster = S.tekster.filter(t => t.id !== id); S.ramme.upd = Date.now(); store.persist(); renderAll(); },
+  async wipe(){ const all = lsRead(); if (all.forsoeg && S.name) delete all.forsoeg[S.name]; delete all.aktiv; lsWrite(all); S = blank(); }
+};
+$("importBtn").addEventListener("click", () => $("importFile").click());
+$("importFile").addEventListener("change", function(){ const f = this.files && this.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { try { const d = JSON.parse(rd.result); if (!d || !d.name) throw 0; store.persist(); S = Object.assign(blank(), d); store.persist(); openVer = {}; drafts = {}; auditVid = null; renderAll(); $("wipeStatus").className = "status good"; $("wipeStatus").textContent = d.name + " er åbnet."; } catch(e){ $("wipeStatus").className = "status bad"; $("wipeStatus").textContent = "Filen kunne ikke læses."; } }; rd.readAsText(f); this.value = ""; });
+$("exportBtn").addEventListener("click", () => { if (!S.name) return; downloadFile(S.name + ".pf3.json", JSON.stringify(S, null, 1), "wipeStatus"); });
+
+
+// ---------- gate / work banner ----------
+function renderGate(){
+  const has = !!S.name;
+  $("gate").hidden = has || !loaded; $("work").hidden = !has;
+  $("main").classList.toggle("locked", !has);
+  if (has){
+    $("wName").textContent = S.name;
+    const vs = S.versioner.slice().sort((a,b) => (b.nr||0)-(a.nr||0));
+    $("wPrompt").textContent = vs.length ? "prompt " + vs[0].nr : "ingen gemt endnu";
+    const ans = S.versioner.filter(v => v.svar && v.svar.trim()).length;
+    $("wSvar").textContent = ans + " af " + S.versioner.length + " indsat";
+    const av = S.versioner.find(v => v.id === auditVid);
+    $("wAudit").textContent = av ? "svar på prompt " + av.nr : "–";
+  }
+  if (store.listNames){ const box = $("gateList"); box.innerHTML = ""; const names = store.listNames().filter(n => n !== S.name); if (names.length){ const l = document.createElement("span"); l.className = "hint"; l.style.margin = "0"; l.textContent = "Eller åbn et tidligere forsøg:"; box.append(l); names.forEach(n => box.append(mkBtn(n, "small", () => store.openName(n)))); } }
+}
+$("gateGo").addEventListener("click", async () => {
+  const n = safeName($("gateName").value);
+  if (!n){ $("gateStatus").className = "status bad"; $("gateStatus").textContent = "Skriv et navn, fx forsoeg-1-fremtiden."; $("gateName").focus(); return; }
+  await store.setName(n); $("gateName").value = "";
+});
+$("gateName").addEventListener("keydown", e => { if (e.key === "Enter") $("gateGo").click(); });
+let newArmed = null;
+$("wNew").addEventListener("click", async () => {
+  const b = $("wNew");
+  if (!newArmed){ newArmed = setTimeout(() => { newArmed = null; b.textContent = "Nyt forsøg"; }, 6000); b.textContent = MODE === "db" ? "Sikker? Det nuværende forsøg slettes for alle" : "Sikker? Det nuværende gemmes, og et nyt startes"; return; }
+  clearTimeout(newArmed); newArmed = null; b.textContent = "Nyt forsøg";
+  await store.newForsoeg(); openVer = {}; drafts = {}; auditVid = null; renderAll(); $("gateName").focus();
+});
+
+// ---------- tekster ----------
+function renderTexts(){
+  const box = $("tekster"); box.innerHTML = "";
+  $("noTexts").hidden = allTexts().length > 0;
+  allTexts().forEach(t => {
+    const lab = document.createElement("label"); const on = (S.ramme.tekster||[]).includes(t.id); if (on) lab.className = "on";
+    const inp = document.createElement("input"); inp.type = "checkbox"; inp.checked = on; inp.id = "tx-" + t.id;
+    inp.addEventListener("change", () => { const set = new Set(S.ramme.tekster||[]); inp.checked ? set.add(t.id) : set.delete(t.id); saveRamme({tekster: allTexts().map(x => x.id).filter(id => set.has(id))}); });
+    const n = (String(t.text||"").match(/^\[[A-Z][a-z]?-\d+\]/gm) || []).length;
+    const d = document.createElement("div"); d.style.minWidth = "0";
+    const ti = document.createElement("span"); ti.className = "ti"; ti.textContent = t.short;
+    const bd = document.createElement("span"); bd.className = "badge" + (t.builtin ? "" : " own"); bd.textContent = t.builtin ? "ligger i maskinen · " + n + " afsnit" : "jeres egen · " + n + " afsnit"; ti.append(bd);
+    const sub = document.createElement("span"); sub.className = "sub"; sub.textContent = t.label + " · afsnit mærket [" + t.code + "-…]";
+    d.append(ti, sub); lab.append(inp, d);
+    if (!t.builtin){ const del = mkBtn("Fjern", "small danger", async e => { e.preventDefault(); if (del.dataset.arm){ await store.deleteText(t.id); } else { del.dataset.arm = "1"; del.textContent = "Fjern? Ja"; setTimeout(() => { delete del.dataset.arm; del.textContent = "Fjern"; }, 4000); } }); del.style.marginLeft = "auto"; del.style.flex = "none"; lab.append(del); }
+    box.append(lab);
+  });
+}
+function numberText(short, label, code, raw){
+  const txt = String(raw||"").replace(/\r/g, "").trim();
+  const hasNums = /^\[[A-Z][a-z]?-\d+\]/m.test(txt);
+  if (hasNums){ const m = txt.match(/^\[([A-Z][a-z]?)-\d+\]/m); return {code: m[1], text: txt.startsWith("===") ? txt : "=== " + label + " ===\n\nAfsnitsnumre som i originalen.\n\n" + txt}; }
+  let paras = txt.split(/\n\s*\n/).map(p => p.replace(/\s*\n\s*/g, " ").trim()).filter(Boolean);
+  if (paras.length < 3) paras = txt.split(/\n/).map(p => p.trim()).filter(Boolean);
+  const out = ["=== " + label + " ===", "", "Teksten er uændret. Afsnitsnumre [" + code + "-1] … [" + code + "-" + paras.length + "] er sat ind af gruppen, så henvisninger kan tjekkes.", ""];
+  paras.forEach((p, i) => { out.push(/^#{1,6}\s/.test(p) ? p : "[" + code + "-" + (i+1) + "] " + p); out.push(""); });
+  return {code, text: out.join("\n")};
+}
+function freeCode(short){
+  const used = new Set(allTexts().map(t => t.code));
+  const base = (short.match(/[A-Za-zÆØÅæøå]/g) || ["X"]).join("");
+  const c1 = base[0].toUpperCase(); if (!used.has(c1)) return c1;
+  for (let i = 1; i < base.length; i++){ const c2 = c1 + base[i].toLowerCase(); if (!used.has(c2)) return c2; }
+  for (const ch of "abcdefghijklmnopqrstuvwxyz"){ if (!used.has(c1 + ch)) return c1 + ch; }
+  return "X";
+}
+$("ntPick").addEventListener("click", () => $("ntFile").click());
+$("ntFile").addEventListener("change", function(){ const f = this.files && this.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { $("ntText").value = rd.result; if (!$("ntShort").value) $("ntShort").value = f.name.replace(/\.(md|txt)$/i, "").split(/[-_ ]/)[0]; $("ntStatus").className = "status"; $("ntStatus").textContent = f.name + " er hentet. Tryk Tilføj teksten."; }; rd.readAsText(f); this.value = ""; });
+$("ntAdd").addEventListener("click", async () => {
+  const st = $("ntStatus"); st.className = "status bad";
+  const short = $("ntShort").value.trim(), label = $("ntLabel").value.trim() || short, raw = $("ntText").value;
+  if (!short){ st.textContent = "Skriv et kort navn, fx forfatterens efternavn."; $("ntShort").focus(); return; }
+  if (!raw.trim()){ st.textContent = "Sæt teksten ind, eller hent en fil."; $("ntText").focus(); return; }
+  if (raw.length > 200000){ st.textContent = "Teksten er for lang (over 200.000 tegn). Brug et uddrag."; return; }
+  const num = numberText(short, label, freeCode(short), raw);
+  const t = {id: "t" + Date.now().toString(36), short, label, code: num.code, text: num.text, ts: Date.now()};
+  try { await store.addText(t); await saveRamme({tekster: (S.ramme.tekster||[]).concat([t.id])}); $("ntShort").value = ""; $("ntLabel").value = ""; $("ntText").value = ""; st.className = "status good"; st.textContent = short + " er lagt ind som [" + t.code + "-…] og valgt til prompten."; }
+  catch(e){ st.textContent = "Teksten blev ikke gemt. " + (e && e.code === "quota_exceeded" ? "Lageret er fuldt." : "Prøv igen."); }
+});
+
+// ---------- ramme ----------
+function buildUdg(){ $("udgangspunkt").innerHTML = UDG.map(([k,t]) => `<label id="udl-${k}"><input type="radio" name="pf3-ud" id="ud-${k}" value="${k}"><div><span class="ti">${t}</span></div></label>`).join("");
+  root.querySelectorAll("#udgangspunkt input").forEach(i => i.addEventListener("change", () => saveRamme({udgangspunkt: [i.value]}))); }
+let rammeTimer = null;
+["pf3-tanker","pf3-ekstra"].forEach(id => $(id).addEventListener("input", () => { clearTimeout(rammeTimer); $("rammeStatus").className = "status"; $("rammeStatus").textContent = "Gemmer …"; rammeTimer = setTimeout(() => saveRamme({tanker: $("pf3-tanker").value, ekstra: $("pf3-ekstra").value}), 600); renderPrompt(); }));
+async function saveRamme(patch){
+  Object.assign(S.ramme, patch, {upd: Date.now()});
+  try { await store.setRamme(S.ramme); $("rammeStatus").className = "status good"; $("rammeStatus").textContent = MODE === "db" ? "Gemt for alle" : "Gemt"; } catch(e){ writeError(e, "rammeStatus"); }
+  renderAll();
+}
+function paintRamme(){
+  UDG.forEach(([k]) => { const el = $("ud-"+k), on = (S.ramme.udgangspunkt||[]).includes(k); if (el){ el.checked = on; $("udl-"+k).classList.toggle("on", on); } });
+  [["pf3-tanker","tanker"],["pf3-ekstra","ekstra"]].forEach(([id,k]) => { const el = $(id); if (document.activeElement !== el) el.value = S.ramme[k] || ""; });
+}
+
+// ---------- prompt ----------
+function medTekster(){ return $("medTekster").checked && selectedTexts().length > 0; }
+function buildPrompt(full){
+  const r = S.ramme, udg = UDG.filter(([k]) => (r.udgangspunkt||[]).includes(k)).map(([,t]) => t), ts = selectedTexts();
+  const L = [];
+  L.push(`Vi er fire studerende på kandidatuddannelsen i IT-didaktisk design på Aarhus Universitet (${NAMES.join(", ")}). Vi skal skrive et kritisk diskussionsafsnit om brugen af generativ AI.`, "");
+  L.push("Udgangspunkt: " + (udg.length ? udg.join(" / ") : "[vælg linse i trin 1]"), "");
+  L.push(medTekster() ? "Teorien – teksterne står nederst i denne besked, med afsnitsnumre:" : "Teorien – vedhæftet som filer, med afsnitsnumre:");
+  L.push(...(ts.length ? ts.map(t => `- ${t.label} – afsnit mærket [${t.code}-…]`) : ["- [vælg tekster i trin 1]"]), "");
+  L.push("Vores holdning – den skal kunne genkendes i dit udkast:", (r.tanker||"").trim() || "[skriv i trin 1]", "");
+  L.push("Skriv et udkast til et kritisk diskussionsafsnit på højst 600 ord. Følg denne struktur:");
+  L.push("1. Hvori består udfordringen, og hvem siger, at det er et problem? Hvorfor? Brug konkrete eksempler, også vores.");
+  L.push("2. Hvem arbejder på løsninger, og med hvilken faglighed? Hvad vil løsningerne fremme: individuelle kompetencer, institutionelle kompetencer, teknologi eller lovgivning?");
+  L.push("3. Hvad nu, og for hvem?", "", "Regler:");
+  L.push("- Brug teksterne til at udfordre og nuancere vores holdning, ikke til at erstatte den. Skriv ikke vores holdning om.");
+  L.push("- Er vi uenige indbyrdes, så bevar uenigheden. Find ikke et kompromis for os.");
+  const ex = ts.slice(0,2).map(t => `[${t.code}-3]`).join(" eller ") || "[A-3]";
+  L.push(`- Henvis til afsnitsnummeret, fx ${ex}. Opfind ikke citater, sidetal eller kilder.`);
+  L.push("- Ingen ros af os eller af spørgsmålet.");
+  if ((r.ekstra||"").trim()) L.push("- " + r.ekstra.trim());
+  if (full && medTekster()){ L.push("", "=== TEKSTERNE ===", "", ts.map(t => t.text).join("\n\n")); }
+  return L.join("\n");
+}
+function renderPrompt(){
+  $("promptbox").textContent = buildPrompt(true);
+  const h = $("tegn");
+  if (!medTekster()){ h.textContent = "Teksterne vedhæftes som filer."; return; }
+  const n = buildPrompt(true).length;
+  h.textContent = nf(n) + " tegn i alt." + (n > 15000 ? " Copilot klipper måske så lange beskeder. Brug fx ChatGPT eller Claude, eller vedhæft filerne i stedet." : "");
+}
+$("medTekster").addEventListener("change", renderPrompt);
+$("copyPrompt").addEventListener("click", () => copyText(buildPrompt(true), "copyStatus"));
+function fileName(t){ return safeName(t.short) + "-" + t.code + ".md"; }
+function renderTextFiles(){
+  const box = $("textFiles"); box.innerHTML = "";
+  const ts = selectedTexts(); if (!ts.length){ const e = document.createElement("span"); e.className = "hint"; e.style.margin = "0"; e.textContent = "Vælg tekster i trin 1."; box.append(e); return; }
+  ts.forEach(t => {
+    const name = fileName(t);
+    box.append(mkBtn("Hent " + name, "", () => downloadFile(name, t.text + "\n", "copyStatus")));
+    box.append(mkBtn("Kopiér " + t.short, "small", () => copyText(t.text, "copyStatus")));
+  });
+}
+
+// ---------- versions ----------
+async function newVersion(extra){
+  const nr = nextRound();
+  const row = Object.assign({id: uid(), nr, prompt: buildPrompt(false), medTekster: medTekster() ? selectedTexts().map(t => t.label) : [], tekster: selectedTexts().map(t => t.label), hvorfor: "Version " + nr, hvem: "Gruppen", ts: Date.now(), upd: Date.now(), svar: "", model: ""}, extra || {});
+  await store.addVersion(row); openVer[nr] = true; return row;
+}
+$("saveVersion").addEventListener("click", async () => {
+  const st = $("verStatus");
+  try { const v = await newVersion({hvorfor: $("pf3-hvorfor").value.trim() || undefined}); $("pf3-hvorfor").value = ""; st.className = "status good"; st.textContent = `Gemt som prompt ${v.nr}. Sæt svaret ind i trin 3.`; renderAll(); }
+  catch(e){ writeError(e, "verStatus"); }
+});
+function renderSvarTil(){
+  const sel = $("svarTil"), cur = sel.value;
+  const vs = S.versioner.slice().sort((a,b) => (b.nr||0)-(a.nr||0));
+  sel.innerHTML = [`<option value="ny">Ny: gem den aktuelle prompt som prompt ${nextRound()}</option>`].concat(vs.map(v => `<option value="${v.id}">Prompt ${v.nr}${v.svar ? " (har svar)" : ""}</option>`)).join("");
+  const open = vs.find(v => !v.svar);
+  if (svarTilTouched && [...sel.options].some(o => o.value === cur)) sel.value = cur; else sel.value = open ? open.id : "ny";
+}
+let svarTilTouched = false;
+$("svarTil").addEventListener("change", () => { svarTilTouched = true; });
+$("saveSvar").addEventListener("click", async () => {
+  const st = $("svarStatus"); st.className = "status bad";
+  const svar = $("svarTekst").value.trim(), model = $("svarModel").value.trim();
+  if (!svar){ st.textContent = "Sæt svaret ind først."; $("svarTekst").focus(); return; }
+  const pick = $("svarTil").value, v = S.versioner.find(x => x.id === pick);
+  try {
+    if (!v){ const nv = await newVersion({hvorfor: "Gemt sammen med svaret", svar, model}); st.textContent = `Gemt som prompt ${nv.nr} med svar. Gå til Stemmeprøven.`; auditVid = nv.id; }
+    else { await store.updateVersion(v.id, {svar, model, upd: Date.now()}); st.textContent = `Svaret er gemt på prompt ${v.nr}. Gå til Stemmeprøven.`; auditVid = v.id; }
+    st.className = "status good"; $("svarTekst").value = ""; $("svarModel").value = ""; svarTilTouched = false; renderAll();
+  } catch(e){ writeError(e, "svarStatus"); }
+});
+$("svarTekst").addEventListener("input", () => $("svarStatus").textContent = "");
+function renderVersioner(){
+  const box = $("verList"), vs = S.versioner.slice().sort((a,b) => (b.nr||0)-(a.nr||0));
+  if (!vs.length){ box.innerHTML = '<div class="card empty">Ingen versioner endnu. Gem prompten i trin 2, eller sæt et svar ind ovenfor.</div>'; return; }
+  const focusId = document.activeElement && document.activeElement.id;
+  if (!Object.keys(openVer).length) openVer[vs[0].nr] = true;
+  box.innerHTML = "";
+  vs.forEach(v => {
+    const d = document.createElement("details"); d.className = "ver" + (v.id === auditVid ? " cur" : ""); if (openVer[v.nr]) d.open = true;
+    d.addEventListener("toggle", () => { if (d.open) openVer[v.nr] = true; else delete openVer[v.nr]; });
+    const s = document.createElement("summary");
+    const b = document.createElement("b"); b.textContent = "Prompt " + v.nr;
+    const w = document.createElement("span"); w.textContent = v.hvorfor;
+    const m = document.createElement("em"); m.textContent = fmt(v.ts) + (v.model ? " · " + v.model : "");
+    const t = document.createElement("span"); t.className = "tag" + (v.svar ? " has" : ""); t.textContent = v.svar ? "svar indsat" : "mangler svar";
+    s.append(b, w, m, t); if (v.id === auditVid){ const c = document.createElement("span"); c.className = "tag cur"; c.textContent = "i Stemmeprøven"; s.append(c); } d.append(s);
+    const body = document.createElement("div"); body.className = "body";
+    const sid = "svar-" + v.id, mid = "model-" + v.id;
+    const sf = document.createElement("div"); sf.className = "field"; sf.innerHTML = `<label class="lbl" for="${sid}">AI'ens svar${v.svar ? "" : " (ikke sat ind endnu – brug feltet øverst i trin 3)"}</label>`;
+    const sa = document.createElement("textarea"); sa.id = sid; sa.rows = 7; sa.value = drafts[sid] != null ? drafts[sid] : (v.svar || ""); sa.addEventListener("input", () => { drafts[sid] = sa.value; }); sf.append(sa);
+    const mf = document.createElement("div"); mf.className = "field"; mf.innerHTML = `<label class="lbl" for="${mid}">Model og indstillinger</label>`;
+    const mi = document.createElement("input"); mi.type = "text"; mi.id = mid; mi.placeholder = "Fx: Copilot (AU), Auto"; mi.value = drafts[mid] != null ? drafts[mid] : (v.model || ""); mi.addEventListener("input", () => { drafts[mid] = mi.value; }); mf.append(mi);
+    const row = document.createElement("div"); row.className = "row"; const st = document.createElement("span"); st.className = "status";
+    row.append(mkBtn("Gem rettelser", "small", async () => { try { await store.updateVersion(v.id, {svar: sa.value, model: mi.value, upd: Date.now()}); delete drafts[sid]; delete drafts[mid]; st.className = "status good"; st.textContent = "Gemt"; renderAll(); } catch(e){ writeError(e, st); } }), st);
+    row.append(mkBtn("Slet version", "small danger", async () => { if (row.dataset.arm){ await store.deleteVersion(v.id); if (auditVid === v.id) auditVid = null; renderAll(); } else { row.dataset.arm = "1"; st.className = "status bad"; st.textContent = "Tryk igen for at slette prompt " + v.nr + "."; setTimeout(() => { delete row.dataset.arm; }, 5000); } }));
+    const pd = document.createElement("details"); const ps = document.createElement("summary"); ps.className = "hint"; ps.textContent = "Vis prompten, som den var i denne version"; pd.append(ps);
+    const pre = document.createElement("pre"); pre.className = "box"; pre.textContent = v.prompt; pre.style.maxHeight = "240px"; pre.style.marginTop = "8px"; pd.append(pre);
+    body.append(sf, mf, row, pd); d.append(body); box.append(d);
+  });
+  if (focusId && $(focusId)) $(focusId).focus();
+}
+
+// ---------- voice test ----------
+function splitSentences(text){
+  const out = [];
+  String(text || "").split(/\n+/).forEach(par => {
+    const p = par.trim(); if (!p) return;
+    if (/^#{1,6}\s/.test(p)){ out.push({t: p.replace(/^#{1,6}\s*/, ""), newPar: true, h: true}); return; }
+    const parts = p.replace(/\b(s|jf|fx|bl\.a|dvs|ca|nr|kap|evt|m\.fl|et al)\.\s/gi, m => m.replace(". ", ".\u0001")).split(/(?<=[.!?…»"”])\s+(?=[A-ZÆØÅÄÖÜ0-9\[\("„“«])/).map(x => x.replace(/\u0001/g, " "));
+    parts.forEach((s, i) => { if (s.trim()) out.push({t: s.trim(), newPar: i === 0}); });
+  });
+  return out;
+}
+function voiceColor(tag){ if (!tag || !tag.v) return "var(--vUn)"; if (tag.v === "os") return "var(--vOs)"; if (tag.v === "ai") return "var(--vAI)"; if (tag.v === "ingen") return "var(--vNo)"; const c = codeInfo(tag.v); return c ? c.color : "var(--vUn)"; }
+function voiceLabel(tag){ if (!tag || !tag.v) return "Ikke tagget"; if (tag.v === "os") return "Os"; if (tag.v === "ai") return "AI'en selv"; if (tag.v === "ingen") return "Ingen (uden belæg)"; const c = codeInfo(tag.v); return c ? c.label : tag.v; }
+function theoryCodes(){ return selectedTexts().map(t => t.code); }
+const tagsOf = vid => (S.stemmer||{})[vid] || {};
+function renderAuditPick(){
+  const sel = $("auditPick"), cur = auditVid || sel.value;
+  const vs = S.versioner.filter(v => v.svar && v.svar.trim()).sort((a,b) => (a.nr||0)-(b.nr||0));
+  sel.innerHTML = vs.map(v => `<option value="${v.id}">Svar på prompt ${v.nr}</option>`).join("");
+  if (!vs.length){ auditVid = null; $("auditEmpty").classList.remove("hidden"); $("auditBody").classList.add("hidden"); return; }
+  $("auditEmpty").classList.add("hidden"); $("auditBody").classList.remove("hidden");
+  sel.value = vs.some(v => v.id === cur) ? cur : vs[vs.length-1].id; auditVid = sel.value;
+  if (store.watchTags) vs.forEach(v => store.watchTags(v.id));
+  renderAudit();
+}
+$("auditPick").addEventListener("change", () => { auditVid = $("auditPick").value; renderAll(); });
+async function setTag(idx, patch){
+  const cur = tagsOf(auditVid)[idx] || {};
+  const next = Object.assign({}, cur, patch, {af: pickTag || cur.af || "", ts: Date.now()});
+  S.stemmer[auditVid] = Object.assign({}, S.stemmer[auditVid] || {}, {[idx]: next}); renderAudit();
+  try { await store.setTag(auditVid, idx, next); } catch(e){ writeError(e, "annotStatus"); }
+}
+function stats(vid){
+  const v = S.versioner.find(x => x.id === vid); if (!v) return null;
+  const SS = splitSentences(v.svar), T = tagsOf(vid);
+  const c = {teori:{}, os:0, ai:0, ingen:0, un:0, cites:{ok:0, drejet:0, ikke:0, u:0}, n: SS.filter(s => !s.h).length};
+  SS.forEach((s, i) => { if (s.h) return; const tg = T[i];
+    if (!tg || !tg.v) c.un++; else if (tg.v === "os") c.os++; else if (tg.v === "ai") c.ai++; else if (tg.v === "ingen") c.ingen++; else c.teori[tg.v] = (c.teori[tg.v]||0)+1;
+    if ((s.t.match(/\[[A-Z][a-z]?-\d+\]/g) || []).length){ const st = tg && tg.c; if (st === "ok") c.cites.ok++; else if (st === "drejet") c.cites.drejet++; else if (st === "ikke") c.cites.ikke++; else c.cites.u++; } });
+  c.teoriN = Object.values(c.teori).reduce((a,b) => a+b, 0); return c;
+}
+function renderAudit(){
+  if (!auditVid) return; const v = S.versioner.find(x => x.id === auditVid); if (!v) return;
+  const SS = splitSentences(v.svar), T = tagsOf(auditVid), c = stats(auditVid), codes = theoryCodes();
+  $("bigbar").innerHTML = SS.map((s,i) => s.h ? "" : `<i style="background:${voiceColor(T[i])}" title="${i+1}: ${voiceLabel(T[i])}"></i>`).join("");
+  const leg = codes.map(code => [codeInfo(code).color, `${codeInfo(code).label} ${pct(c.teori[code]||0, c.n)}%`]);
+  leg.push(["var(--vOs)", `Os ${pct(c.os, c.n)}%`], ["var(--vAI)", `AI'en selv ${pct(c.ai, c.n)}%`], ["var(--vNo)", `Uden belæg ${pct(c.ingen, c.n)}%`], ["var(--vUn)", `Ikke tagget ${c.un}`]);
+  $("legend").innerHTML = leg.map(([col, lab]) => `<span><i style="background:${col}"></i>${lab}</span>`).join("");
+  const tot = c.cites.ok + c.cites.drejet + c.cites.ikke + c.cites.u;
+  $("tally").innerHTML = [[pct(c.teoriN, c.n) + "%", "teori"], [pct(c.os, c.n) + "%", "os"], [pct(c.ai, c.n) + "%", "AI'en selv"], [pct(c.ingen, c.n) + "%", "uden belæg"], [c.cites.ok + "/" + tot, "henvisninger, der står der"]].map(([b,s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
+  const box = $("sentences"); box.innerHTML = "";
+  SS.forEach((s, i) => {
+    const tg = T[i] || {}; const d = document.createElement("div"); d.className = "sent";
+    if (s.h){ const h = document.createElement("div"); h.className = "txt h"; h.textContent = s.t; d.append(h); box.append(d); return; }
+    const tx = document.createElement("div"); tx.className = "txt"; tx.style.borderLeftColor = voiceColor(tg);
+    const nn = document.createElement("span"); nn.className = "n"; nn.textContent = String(i+1); tx.append(nn, document.createTextNode(s.t)); d.append(tx);
+    const tags = document.createElement("div"); tags.className = "tags";
+    const mk = (label, on, col, fn) => { const b = mkBtn(label, "", fn); if (on){ b.classList.add("on"); b.style.background = col; } return b; };
+    codes.forEach(code => tags.append(mk(codeInfo(code).label, tg.v === code, codeInfo(code).color, () => setTag(i, {v: code}))));
+    const sep = document.createElement("span"); sep.className = "sep"; tags.append(sep);
+    tags.append(mk("Os", tg.v === "os", "var(--vOs)", () => setTag(i, {v: "os"})));
+    tags.append(mk("AI'en selv", tg.v === "ai", "var(--vAI)", () => setTag(i, {v: "ai"})));
+    tags.append(mk("Uden belæg", tg.v === "ingen", "var(--vNo)", () => setTag(i, {v: "ingen"})));
+    if (tg.v){ const x = mkBtn("×", "small", () => setTag(i, {v: ""})); x.setAttribute("aria-label","Fjern tag"); tags.append(x); }
+    d.append(tags);
+    const refs = [...new Set(s.t.match(/\[([A-Z][a-z]?)-(\d+)\]/g) || [])];
+    if (refs.length){
+      const ci = document.createElement("div"); ci.className = "cite";
+      refs.forEach(r => { const key = r.slice(1,-1), txt = PARA[key];
+        const rf = document.createElement("div"); rf.className = "ref"; rf.textContent = r + (txt ? "" : " – findes ikke i teksterne"); ci.append(rf);
+        if (txt){ const q = document.createElement("div"); q.className = "q"; q.textContent = txt; q.addEventListener("click", () => q.classList.toggle("open")); ci.append(q); } });
+      const cb = document.createElement("div"); cb.className = "cb";
+      [["ok","Står der"],["drejet","Drejet"],["ikke","Står der ikke"]].forEach(([k,l]) => { const b = mkBtn(l, "", () => setTag(i, {c: k})); if (tg.c === k) b.classList.add("on"); cb.append(b); });
+      ci.append(cb); d.append(ci);
+    }
+    box.append(d);
+  });
+  const answered = S.versioner.filter(x => x.svar && x.svar.trim() && Object.keys(tagsOf(x.id)).length).sort((a,b) => (a.nr||0)-(b.nr||0));
+  $("cmpBox").classList.toggle("hidden", answered.length < 2);
+  $("cmp").innerHTML = answered.map(x => { const st = stats(x.id), S2 = splitSentences(x.svar), TT = tagsOf(x.id); return `<div class="r"><span>Prompt ${x.nr}</span><div class="bar">${S2.map((s,i) => s.h ? "" : `<i style="background:${voiceColor(TT[i])}"></i>`).join("")}</div><em>os ${pct(st.os, st.n)}%</em></div>`; }).join("");
+}
+function buildAnnotated(){
+  const v = S.versioner.find(x => x.id === auditVid); if (!v) return "";
+  const SS = splitSentences(v.svar), T = tagsOf(auditVid);
+  const L = [`## AI'ens tekst (${S.name}, prompt ${v.nr}) – kommenteret`, "", `Model: ${v.model || "–"}. Farver i Stemmeprøven: teori, os, AI'en selv, uden belæg.`, ""];
+  SS.forEach((s, i) => { const tg = T[i] || {}; if (s.newPar && i) L.push(""); if (s.h){ L.push("### " + s.t); return; }
+    L.push(`${s.t} ⟨${i+1}: ${voiceLabel(tg)}⟩`);
+    const refs = s.t.match(/\[[A-Z][a-z]?-\d+\]/g) || [], who = tg.af ? tg.af + ": " : "";
+    if (tg.v === "ingen" || tg.c === "ikke" || tg.c === "drejet"){ const why = tg.c === "ikke" ? `Henvisningen ${refs.join(", ")} står der ikke.` : tg.c === "drejet" ? `Henvisningen ${refs.join(", ")} er drejet i forhold til teksten.` : "Påstand uden belæg i teksterne eller i vores holdning."; L.push(`:::warning\n${who}${why}\n:::`); }
+    else if (tg.v === "os") L.push(`:::info\n${who}Vores holdning er med her.\n:::`);
+    else if (tg.c === "ok" && refs.length) L.push(`:::info\n${who}${refs.join(", ")} står der.\n:::`); });
+  return L.join("\n");
+}
+function buildReflection(){
+  const v = S.versioner.find(x => x.id === auditVid); if (!v) return ""; const c = stats(auditVid);
+  const teori = theoryCodes().map(code => `${codeInfo(code).label} ${c.teori[code]||0}`).join(", ");
+  const L = [`## Refleksion – udkast med tal fra Stemmeprøven (${S.name}, prompt ${v.nr})`, ""];
+  L.push(`**Hvem taler?** Af ${c.n} sætninger er ${c.teoriN} teori (${teori}), ${c.os} os, ${c.ai} AI'en selv og ${c.ingen} uden belæg. ${c.un ? c.un + " er ikke tagget endnu. " : ""}Vores stemme fylder altså ${pct(c.os, c.n)} %.`, "");
+  const tot = c.cites.ok + c.cites.drejet + c.cites.ikke + c.cites.u;
+  L.push(`**Henvisninger.** AI'en henviser ${tot} gange. ${c.cites.ok} står der, ${c.cites.drejet} er drejet, ${c.cites.ikke} står der ikke${c.cites.u ? ", " + c.cites.u + " er ikke tjekket" : ""}.`, "");
+  L.push(`**Vores holdning.** Vi gav AI'en vores holdning (${(S.ramme.tanker||"").trim().split(/\s+/).filter(Boolean).length} ord). [Skriv: hvad tog den med, hvad lod den være, og blev vores holdning bevaret, udglattet eller skrevet om?]`, "");
+  const answered = S.versioner.filter(x => x.svar && Object.keys(tagsOf(x.id)).length).sort((a,b) => (a.nr||0)-(b.nr||0));
+  if (answered.length > 1) L.push("**Fra version til version.** " + answered.map(x => { const s = stats(x.id); return `Prompt ${x.nr}: os ${pct(s.os, s.n)} %, uden belæg ${pct(s.ingen, s.n)} %`; }).join(". ") + ". [Skriv: hvad ændrede vi i prompten, og hvad gjorde det?]", "");
+  L.push("**Hvordan brugte vi sprogmodellen?** [Skriv.]", "**Kunne vi genkende udfordringerne fra teksterne i vores egen proces?** [Skriv med henvisning til afsnit.]", "**Hvordan sikrede vi, at vores stemme blev hørt?** [Skriv ud fra tallene ovenfor.]");
+  return L.join("\n");
+}
+$("copyAnnot").addEventListener("click", () => copyText(buildAnnotated(), "annotStatus"));
+$("copyRefl").addEventListener("click", () => copyText(buildReflection(), "annotStatus"));
+
+// ---------- bilag ----------
+function buildBilag(){
+  const r = S.ramme, udg = UDG.filter(([k]) => (r.udgangspunkt||[]).includes(k)).map(([,t]) => t), vs = S.versioner.slice().sort((a,b) => (a.nr||0)-(b.nr||0));
+  const models = [...new Set(vs.map(v => v.model).filter(Boolean))];
+  const L = [`## Bilag: ${S.name || "forsøg"} – prompt, versioner og AI'ens svar`, "", "### Metadata", "| | |", "|---|---|"];
+  L.push(`| Platform / værktøj med udgave og indstillinger | ${models.join("; ") || "(udfyldes i trin 3)"} |`);
+  L.push(`| Dato | ${[...new Set(vs.map(v => fmt(v.ts).split(",")[0] || fmt(v.ts)))].join(", ")} |`);
+  L.push(`| Uploads | ${selectedTexts().map(t => `${t.label} – afsnit mærket [${t.code}-…]`).join("; ")} |`);
+  L.push("| Replikationsnoter | Prompten er bygget af gruppens holdning i PF3 Promptmaskine. Teksterne blev vedhæftet som markdown-filer med afsnitsnumre (eller stod nederst i prompten, se versionen). |", "");
+  L.push("Udgangspunkt: " + (udg.join(" / ") || "–"), "", "### Vores holdning (vores stemme i prompten)", (r.tanker||"").trim() || "(ikke skrevet endnu)", "", "### Promptversioner");
+  if (!vs.length) L.push("(ingen endnu)");
+  vs.forEach(v => { L.push(`#### Prompt ${v.nr} – ${v.hvorfor}`, `Gemt ${fmt(v.ts)}. Model: ${v.model || "–"}`);
+    if (v.medTekster && v.medTekster.length) L.push("Hele teksten fra disse kilder stod nederst i prompten: " + v.medTekster.join("; ")); else if (v.tekster && v.tekster.length) L.push("Vedhæftede tekster: " + v.tekster.join("; "));
+    L.push("", "```", v.prompt, "```", "", "**AI'ens svar (uredigeret):**", "", v.svar ? v.svar : "(ikke indsat)", ""); });
+  return L.join("\n");
+}
+function renderBilag(){ $("bilagbox").textContent = buildBilag(); $("bilagHint").textContent = S.name ? "Filen hedder " + S.name + "-bilag.md" : ""; }
+$("dlBilag").addEventListener("click", () => downloadFile((S.name || "forsoeg") + "-bilag.md", buildBilag() + "\n", "bilagStatus"));
+$("copyBilag").addEventListener("click", () => copyText(buildBilag(), "bilagStatus"));
+
+// ---------- wipe ----------
+let wipeArmed = null;
+$("wipe").addEventListener("click", async () => {
+  const b = $("wipe"), st = $("wipeStatus");
+  if (!wipeArmed){ wipeArmed = setTimeout(() => { wipeArmed = null; b.textContent = "Slet forsøget"; st.textContent = ""; }, 6000); b.textContent = "Ja, slet forsøget nu"; st.className = "status bad"; st.textContent = "Holdning, versioner, svar, tags og egne tekster slettes" + (MODE === "db" ? " for alle fire." : "."); return; }
+  clearTimeout(wipeArmed); wipeArmed = null; b.textContent = "Slet forsøget";
+  try { await store.wipe(); openVer = {}; drafts = {}; auditVid = null; renderAll(); st.className = "status good"; st.textContent = "Forsøget er slettet."; } catch(e){ writeError(e, "wipeStatus"); }
+});
+
+// ---------- errors ----------
+function writeError(e, target){
+  const st = typeof target === "string" ? $(target) : target; if (!st) return;
+  st.className = "status bad"; const c = e && e.code;
+  st.textContent = c === "invalid_argument" || c === "permission_denied" ? "Du har ikke adgang til at skrive her. Bed Karina om at give dig adgang som redaktør." : c === "quota_exceeded" ? "Lageret er fuldt." : "Det blev ikke gemt. Prøv igen om lidt.";
+}
+
+// ---------- render all ----------
+function renderAll(){ rebuildPara(); renderGate(); renderTexts(); paintRamme(); renderPrompt(); renderTextFiles(); renderVersioner(); renderSvarTil(); renderAuditPick(); renderBilag(); }
+buildUdg(); renderAll();
+store.init(() => { loaded = true; renderAll(); });
+})();
+
+</script>
+
+</body></html>
